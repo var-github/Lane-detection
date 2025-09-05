@@ -72,8 +72,13 @@ def format_video(path):
     temp_output  # output video path
     ]
     subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    os.replace(temp_output, path)
-    return path
+
+    with open(temp_output, 'rb') as f:
+        st.session_state[path] = f.read()
+
+    os.remove(temp_output)
+    os.remove(path)
+    return st.session_state[path]
 
 
 
@@ -146,6 +151,7 @@ if video_file is not None:
         st.video(format_video(input_processed))
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
+
 
 
 
