@@ -152,8 +152,3 @@ if video_file is not None:
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
 
-
-
-
-
-
