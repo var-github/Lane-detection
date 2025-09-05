@@ -129,18 +129,19 @@ if video_file is not None:
         # Clean up temporary input file
         os.remove(input_temp.name)
 
-        # Display videos
-        command = [
-        'ffmpeg',
-        '-y',  # overwrite output without asking
-        '-i', input_processed,
-        '-vcodec', 'libx264',
-        '-pix_fmt', 'yuv420p',  # ensure compatibility
-        input_processed]
-        subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        import imageio
+
+        reader = imageio.get_reader(input_processed)
+        writer = imageio.get_writer(output_processed, fps=reader.get_meta_data()['fps'], codec='libx264')
+        
+        for frame in reader:
+            writer.append_data(frame)
+        writer.close()
+        reader.close()
         
         st.subheader("Original Video")
         st.video(input_processed)
         st.subheader("Processed Video")
         st.video(output_processed)
+
 
