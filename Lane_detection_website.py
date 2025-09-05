@@ -134,7 +134,6 @@ if video_file is not None:
         '-y',  # overwrite output if exists
         '-i', input_processed,  # input video path
         '-vcodec', 'libx264',  # video codec avc1 (H.264)
-        '-pix_fmt', 'yuv420p',  # pixel format for compatibility
         input_processed  # output video path
         ]
         subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -143,3 +142,4 @@ if video_file is not None:
         st.video(input_processed)
         st.subheader("Processed Video")
         st.video(output_processed)
+
