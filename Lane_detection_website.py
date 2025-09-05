@@ -63,6 +63,17 @@ def process_frame(input_frame):
     return result
 
 
+def format_video(path):
+    command = ['ffmpeg', '-y',  # overwrite output if exists
+    '-i', path,  # input video path
+    '-vcodec', 'libx264',  # video codec avc1 (H.264)
+    path  # output video path
+    ]
+    subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    return path
+
+
+
 
 # Main code
 st.title('Lane detection using Attention based CNN model')
@@ -128,18 +139,10 @@ if video_file is not None:
 
         # Clean up temporary input file
         os.remove(input_temp.name)
-
-        command = [
-        'ffmpeg',
-        '-y',  # overwrite output if exists
-        '-i', input_processed,  # input video path
-        '-vcodec', 'libx264',  # video codec avc1 (H.264)
-        input_processed  # output video path
-        ]
-        subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         
         st.subheader("Original Video")
-        st.video(input_processed)
+        st.video(format_video(input_processed))
         st.subheader("Processed Video")
-        st.video(output_processed)
+        st.video(format_video(output_processed))
+
 
