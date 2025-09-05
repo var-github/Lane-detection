@@ -91,7 +91,7 @@ if video_file is not None:
             stop()
 
         # 'avc1' codec for H.264 in MP4 container
-        fourcc = cv2.VideoWriter_fourcc(*'avc1')
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 
         # Output temp file
         st.session_state['input_processed'] = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4").name
@@ -140,6 +140,7 @@ if video_file is not None:
 
         st.text(os.path.abspath(st.session_state['input_processed']))
         st.text(os.path.abspath(st.session_state['output_processed']))
+
 
 
 
