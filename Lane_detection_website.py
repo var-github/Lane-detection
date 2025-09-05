@@ -11,6 +11,10 @@ MODEL = "lane_detection_final_6.keras"
 
 if 'model' not in st.session_state:
     st.session_state['model'] = load_model(MODEL, custom_objects={'weighted_bce': weighted_bce, 'spatial_attention':spatial_attention})
+if 'input_processed' not in st.session_state:
+    st.session_state['input_processed'] = ""
+if 'output_processed' not in st.session_state:
+    st.session_state['output_processed'] = ""
 
 
 @st.dialog("Video too long")
@@ -90,12 +94,12 @@ if video_file is not None:
         fourcc = cv2.VideoWriter_fourcc(*'avc1')
 
         # Output temp file
-        input_processed = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4").name
-        output_processed = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4").name
+        st.session_state['input_processed'] = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4").name
+        st.session_state['output_processed'] = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4").name
 
         # Create video writer
-        input_video = cv2.VideoWriter(input_processed, fourcc, fps, (1280, 720))
-        output_video = cv2.VideoWriter(output_processed, fourcc, fps, (1280, 720))
+        input_video = cv2.VideoWriter(st.session_state['input_processed'], fourcc, fps, (1280, 720))
+        output_video = cv2.VideoWriter(st.session_state['output_processed'], fourcc, fps, (1280, 720))
 
         # Progress bar
         progress_bar = st.progress(0)
@@ -130,6 +134,7 @@ if video_file is not None:
 
         # Display videos
         st.subheader("Original Video")
-        st.video(input_processed)
+        st.video(st.session_state['input_processed'])
         st.subheader("Processed Video")
-        st.video(output_processed)
+        st.video(st.session_state['output_processed'])
+
