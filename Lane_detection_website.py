@@ -138,7 +138,8 @@ if video_file is not None:
         st.subheader("Processed Video")
         st.video(st.session_state['output_processed'])
 
-        st.text(os.listdir(st.session_state['input_processed']))
-        st.text(os.listdir(st.session_state['output_processed']))
+        st.text(os.path.abspath(st.session_state['input_processed']))
+        st.text(os.path.abspath(st.session_state['output_processed']))
+
 
 
