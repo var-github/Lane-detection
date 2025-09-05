@@ -15,10 +15,6 @@ if 'input_processed' not in st.session_state:
     st.session_state['input_processed'] = ""
 if 'output_processed' not in st.session_state:
     st.session_state['output_processed'] = ""
-if 'input_video' not in st.session_state:
-    st.session_state['input_video'] = ""
-if 'output_video' not in st.session_state:
-    st.session_state['output_video'] = ""
 
 
 @st.dialog("Video too long")
@@ -102,8 +98,8 @@ if video_file is not None:
         st.session_state['output_processed'] = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4").name
 
         # Create video writer
-        st.session_state['input_video'] = cv2.VideoWriter(st.session_state['input_processed'], fourcc, fps, (1280, 720))
-        st.session_state['output_video'] = cv2.VideoWriter(st.session_state['output_processed'], fourcc, fps, (1280, 720))
+        input_video = cv2.VideoWriter(st.session_state['input_processed'], fourcc, fps, (1280, 720))
+        output_video = cv2.VideoWriter(st.session_state['output_processed'], fourcc, fps, (1280, 720))
 
         # Progress bar
         progress_bar = st.progress(0)
@@ -116,8 +112,8 @@ if video_file is not None:
             if not ret:
                 break
             frame = cv2.resize(frame, (1280, 720))
-            st.session_state['input_video'].write(frame)
-            st.session_state['output_video'].write(process_frame(frame))
+            input_video.write(frame)
+            output_video.write(process_frame(frame))
 
             # Update progress bar
             frames_processed += 1
@@ -126,8 +122,8 @@ if video_file is not None:
             progress_text.text(f"Processing video: {progress_pct}% completed")
 
         cap.release()
-        st.session_state['input_video'].release()
-        st.session_state['output_video'].release()
+        input_video.release()
+        output_video.release()
 
         # Remove progress bar
         progress_bar.empty()
@@ -141,5 +137,8 @@ if video_file is not None:
         st.video(st.session_state['input_processed'])
         st.subheader("Processed Video")
         st.video(st.session_state['output_processed'])
+
+        st.text(os.listdir(st.session_state['input_processed']))
+        st.text(os.listdir(st.session_state['output_processed']))
 
 
