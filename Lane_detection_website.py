@@ -134,12 +134,13 @@ if video_file is not None:
 
         # Display videos
         st.subheader("Original Video")
-        st.video(st.session_state['input_processed'])
+        st.video(open(st.session_state['input_processed'], 'rb').read())
         st.subheader("Processed Video")
         st.video(st.session_state['output_processed'])
 
         st.text(os.path.abspath(st.session_state['input_processed']))
         st.text(os.path.abspath(st.session_state['output_processed']))
+
 
 
 
