@@ -64,12 +64,15 @@ def process_frame(input_frame):
 
 
 def format_video(path):
+    temp_output = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4").name
+
     command = ['ffmpeg', '-y',  # overwrite output if exists
     '-i', path,  # input video path
     '-vcodec', 'libx264',  # video codec avc1 (H.264)
-    output_processed  # output video path
+    temp_output  # output video path
     ]
     subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    os.replace(temp_output, path)
     return path
 
 
@@ -143,6 +146,7 @@ if video_file is not None:
         st.video(format_video(input_processed))
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
+
 
 
 
