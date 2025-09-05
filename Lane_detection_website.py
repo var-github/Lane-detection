@@ -3,6 +3,7 @@ import tempfile
 import cv2
 import os
 import numpy as np
+import subprocess
 from tensorflow.keras.models import load_model
 from custom_layers import spatial_attention, weighted_bce
 
@@ -129,7 +130,17 @@ if video_file is not None:
         os.remove(input_temp.name)
 
         # Display videos
+        command = [
+        'ffmpeg',
+        '-y',  # overwrite output without asking
+        '-i', input_processed,
+        '-vcodec', 'libx264',
+        '-pix_fmt', 'yuv420p',  # ensure compatibility
+        input_processed]
+        subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
         st.subheader("Original Video")
         st.video(input_processed)
         st.subheader("Processed Video")
         st.video(output_processed)
+
