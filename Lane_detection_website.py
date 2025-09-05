@@ -88,7 +88,7 @@ if video_file is not None:
             stop()
 
         # 'avc1' codec for H.264 in MP4 container
-        fourcc = cv2.VideoWriter_fourcc(*'x264')
+        fourcc = cv2.VideoWriter_fourcc(*'avc1')
 
         # Output temp file
         input_processed = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4").name
@@ -143,5 +143,6 @@ if video_file is not None:
         st.video(input_processed)
         st.subheader("Processed Video")
         st.video(output_processed)
+
 
 
