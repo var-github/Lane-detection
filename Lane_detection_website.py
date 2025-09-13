@@ -9,7 +9,7 @@ from tensorflow.keras.models import load_model
 from custom_layers import spatial_attention, weighted_bce
 
 MODEL = "lane_detection_final_6.keras"
-DATA_DIR = "./Data"
+DATA_DIR = "Data/"
 
 if 'model' not in st.session_state:
     st.session_state['model'] = load_model(MODEL, custom_objects={'weighted_bce': weighted_bce, 'spatial_attention': spatial_attention})
@@ -117,22 +117,16 @@ video_file = st.file_uploader('Upload a video file', type=['mp4', 'mov', 'avi', 
 
 # Randomize button
 if st.button("Randomize"):
-    if not os.path.exists(DATA_DIR):
-        st.error(f"Data directory '{DATA_DIR}' does not exist.")
-    else:
-        files = [file for file in os.listdir(DATA_DIR) if file.lower().endswith(('.mp4', '.mov', '.avi', '.mkv'))]
-        if not files:
-            st.error(f"No video files found in '{DATA_DIR}'.")
-        else:
-            random_video = random.choice(files)
-            random_video_path = os.path.join(DATA_DIR, random_video)
-            st.info(f"Randomly selected video: {random_video}")
-            input_processed, output_processed = process_video(random_video_path)
-            if input_processed and output_processed:
-                st.subheader("Original Video")
-                st.video(format_video(input_processed))
-                st.subheader("Processed Video")
-                st.video(format_video(output_processed))
+    files = [file for file in os.listdir(DATA_DIR)]
+    random_video = random.choice(files)
+    random_video_path = os.path.join(DATA_DIR, random_video)
+    st.info(f"Randomly selected video: {random_video}")
+    input_processed, output_processed = process_video(random_video_path)
+    if input_processed and output_processed:
+        st.subheader("Original Video")
+        st.video(format_video(input_processed))
+        st.subheader("Processed Video")
+        st.video(format_video(output_processed))
 
 # Process uploaded video file
 if video_file is not None:
@@ -149,3 +143,4 @@ if video_file is not None:
         st.video(format_video(input_processed))
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
+
