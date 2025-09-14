@@ -116,7 +116,7 @@ st.markdown("""
     height: 80px;
     width: 80px;
     border: none;
-    font-size: 25px;
+    font-size: 40px;
 }
 </style>""", unsafe_allow_html=True)
 
@@ -157,6 +157,7 @@ if video_file is not None:
         st.video(format_video(input_processed))
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
+
 
 
 
