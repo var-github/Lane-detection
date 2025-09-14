@@ -112,8 +112,10 @@ def process_video(video_path):
 
 st.markdown("""
 <style>
-button {
-    height: 100px;
+#random {
+    height: 120px;
+    width: 120px;
+    border: none;
 }
 </style>""", unsafe_allow_html=True)
 
@@ -126,7 +128,7 @@ col2.text("")
 video_file = col1.file_uploader('Upload a video file', type=['mp4', 'mov', 'avi', 'mkv'])
 
 # Randomize button
-if col2.button("🔀"):
+if col2.button("🔀", key="random"):
     video_file = None
     files = [file for file in os.listdir(DATA_DIR)]
     random_video = random.choice(files)
@@ -154,6 +156,7 @@ if video_file is not None:
         st.video(format_video(input_processed))
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
+
 
 
 
