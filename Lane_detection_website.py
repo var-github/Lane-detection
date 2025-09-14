@@ -113,8 +113,8 @@ def process_video(video_path):
 st.markdown("""
 <style>
 .st-key-random p,.st-key-random div {
-    height: 100%;
-    width: 100%;
+    height: 100px;
+    width: 100px;
 }
 </style>""", unsafe_allow_html=True)
 
@@ -155,6 +155,7 @@ if video_file is not None:
         st.video(format_video(input_processed))
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
+
 
 
 
