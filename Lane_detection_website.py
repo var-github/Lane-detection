@@ -125,6 +125,7 @@ video_file = st.file_uploader('Upload a video file', type=['mp4', 'mov', 'avi', 
 
 # Randomize button
 if st.button("Randomize"):
+    video_file = None
     refresh()
     files = [file for file in os.listdir(DATA_DIR)]
     random_video = random.choice(files)
@@ -152,6 +153,7 @@ if video_file is not None:
         st.video(format_video(input_processed))
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
+
 
 
 
