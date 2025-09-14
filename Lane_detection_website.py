@@ -110,6 +110,13 @@ def process_video(video_path):
 
     return input_processed, output_processed
 
+st.markdown("""
+<style>
+button {
+    height: 100px;
+}
+</style>""", unsafe_allow_html=True)
+
 
 st.title('Lane detection using Attention based CNN model')
 col1, col2 = st.columns([10, 1])
@@ -119,7 +126,7 @@ col2.text("")
 video_file = col1.file_uploader('Upload a video file', type=['mp4', 'mov', 'avi', 'mkv'])
 
 # Randomize button
-if col2.button("🔀", width=100, height=100):
+if col2.button("🔀"):
     video_file = None
     files = [file for file in os.listdir(DATA_DIR)]
     random_video = random.choice(files)
@@ -147,6 +154,7 @@ if video_file is not None:
         st.video(format_video(input_processed))
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
+
 
 
 
