@@ -119,7 +119,7 @@ st.markdown("""
 }
 .st-key-random p{
     position: relative;
-    top: -22px;
+    top: -20px;
     left: -15px;
 }
 </style>""", unsafe_allow_html=True)
@@ -161,6 +161,7 @@ if video_file is not None:
         st.video(format_video(input_processed))
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
+
 
 
 
