@@ -113,7 +113,7 @@ def process_video(video_path):
 
 def refresh():
     js = """<script>
-        console.log("Hi");
+        document.querySelector("stFileUploader>div").display = 'none';
     </script>"""
     st.markdown(js, unsafe_allow_html=True)
 
@@ -152,6 +152,7 @@ if video_file is not None:
         st.video(format_video(input_processed))
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
+
 
 
 
