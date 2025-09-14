@@ -135,6 +135,12 @@ video_file = col1.file_uploader('Upload a video file', type=['mp4', 'mov', 'avi'
 # Randomize button
 if col2.button("🔀", key="random", help="Choose a random video"):
     video_file = None
+    st.markdown("""
+    <style>
+    .stFileUploader>div{
+        display: none;
+    }
+    </style>""", unsafe_allow_html=True)
     files = [file for file in os.listdir(DATA_DIR)]
     random_video = random.choice(files)
     random_video_path = os.path.join(DATA_DIR, random_video)
@@ -161,6 +167,7 @@ if video_file is not None:
         st.video(format_video(input_processed))
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
+
 
 
 
