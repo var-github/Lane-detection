@@ -110,10 +110,15 @@ def process_video(video_path):
 
     return input_processed, output_processed
 
+
+def refresh():
+    print("Hi")
+
+
 st.title('Lane detection using Attention based CNN model')
 
 # Upload video file uploader
-video_file = st.file_uploader('Upload a video file', type=['mp4', 'mov', 'avi', 'mkv'])
+video_file = st.file_uploader('Upload a video file', type=['mp4', 'mov', 'avi', 'mkv'], onchange=refresh)
 
 # Randomize button
 if st.button("Randomize"):
@@ -143,4 +148,5 @@ if video_file is not None:
         st.video(format_video(input_processed))
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
+
 
