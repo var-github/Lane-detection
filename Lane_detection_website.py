@@ -112,7 +112,10 @@ def process_video(video_path):
 
 
 def refresh():
-   st.text("Hi")
+   js = """<script>
+      console.log(document.querySelector("stFileUploader>div"));
+  </script>"""
+st.markdown(js, unsafe_allow_html=True)
 
 
 st.title('Lane detection using Attention based CNN model')
@@ -148,6 +151,7 @@ if video_file is not None:
         st.video(format_video(input_processed))
         st.subheader("Processed Video")
         st.video(format_video(output_processed))
+
 
 
 
